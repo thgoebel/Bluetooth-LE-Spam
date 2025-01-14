@@ -313,7 +313,7 @@ class StartFragment : Fragment() {
 
         allPermissions.forEach {permission ->
             var missingRequirementString = "Permission " + permission.replace("android.permission.", "") + " not granted"
-            val isGranted = PermissionCheck.checkPermission(permission, AppContext.getActivity(), false)
+            val isGranted = PermissionCheck.checkPermission(permission, AppContext.getActivity())
 
             if(isGranted){
                removeMissingRequirement(missingRequirementString)
@@ -344,7 +344,7 @@ class StartFragment : Fragment() {
     }
 
     fun checkBackgroundLocationAccessPermission(promptForNotGranted:Boolean = false):Boolean{
-        val isGranted = PermissionCheck.checkPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION, AppContext.getActivity(), false)
+        val isGranted = PermissionCheck.checkPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION, AppContext.getActivity())
         if(promptForNotGranted){
             //PermissionCheck.requireAllPermissions(AppContext.getActivity(), notGrantedPermissions.toTypedArray())
             activityResultLauncher.launch(arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION))
