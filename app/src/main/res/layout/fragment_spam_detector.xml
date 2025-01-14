@@ -38,8 +38,8 @@
                 android:textStyle="bold"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/textSizeHeadline"
-                app:layout_constraintBottom_toTopOf="@id/spamDetectorFragmentSubTitle"
-               />
+                app:layout_constraintBottom_toTopOf="@id/spamDetectorFragmentSubTitle" />
+
             <TextView
                 android:id="@+id/spamDetectorFragmentSubTitle"
                 android:layout_width="match_parent"
@@ -47,8 +47,7 @@
                 android:text="Detect Flippers and other BLE Spamming Devices"
                 android:textStyle="italic"
                 android:textColor="@color/text_color"
-                app:layout_constraintBottom_toBottomOf="@id/spamDetectorTopLayout"
-               />
+                app:layout_constraintBottom_toBottomOf="@id/spamDetectorTopLayout" />
 
             <ImageButton
                 android:id="@+id/spamDetectorToggleButton"
@@ -79,15 +78,7 @@
             android:textStyle="bold"
             android:textColor="@color/text_color"
             android:textSize="@dimen/textSizeHeadline3"
-            app:layout_constraintTop_toTopOf="@id/spamDetectorCenterLayout"
-            />
-        <!--
-        <ListView
-            android:id="@+id/spamDetectionFlipperDevicesList"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/spamDetectorFlipperListTitle"
-            app:layout_constraintBottom_toBottomOf="@id/spamDetectorCenterLayout"/>-->
+            app:layout_constraintTop_toTopOf="@id/spamDetectorCenterLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/spamDetectionFlipperDevicesList"
@@ -95,6 +86,7 @@
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/spamDetectorFlipperListTitle"
             app:layout_constraintBottom_toBottomOf="@id/spamDetectorCenterLayout"
+            app:layoutManager="LinearLayoutManager"
             tools:itemCount="1"
             tools:listitem="@layout/list_item_flipper_device_scan_result" />
 
@@ -108,6 +100,7 @@
         app:layout_constraintHeight_percent="0.48"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@id/spamDetectorLayout">
+
         <TextView
             android:id="@+id/spamDetectorSpamListTitle"
             android:layout_width="match_parent"
@@ -118,25 +111,16 @@
             android:textSize="@dimen/textSizeHeadline3"
             app:layout_constraintTop_toTopOf="@id/spamDetectorBottomLayout" />
 
-        <!--
-        <ListView
-            android:id="@+id/spamDetectionSpamPackageList"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/spamDetectorSpamListTitle"
-            app:layout_constraintBottom_toBottomOf="@id/spamDetectorBottomLayout"/>-->
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/spamDetectionSpamPackageList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/spamDetectorSpamListTitle"
             app:layout_constraintBottom_toBottomOf="@id/spamDetectorBottomLayout"
+            app:layoutManager="LinearLayoutManager"
             tools:itemCount="1"
             tools:listitem="@layout/list_item_spam_package_scan_result" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

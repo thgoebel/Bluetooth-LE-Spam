@@ -10,6 +10,4 @@ interface IBluetoothLeScanCallback {
     fun onFlipperListUpdated()
     fun onSpamResultPackageDetected(spamPackageScanResult: SpamPackageScanResult, alreadyKnown:Boolean)
     fun onSpamResultPackageListUpdated()
-
-
 }
