@@ -16,10 +16,10 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import de.simon.dankelmann.bluetoothlespam.AppContext.AppContext
-import de.simon.dankelmann.bluetoothlespam.AppContext.AppContext.Companion.bluetoothAdapter
 import de.simon.dankelmann.bluetoothlespam.Database.AppDatabase
 import de.simon.dankelmann.bluetoothlespam.Handlers.AdvertisementSetQueueHandler
 import de.simon.dankelmann.bluetoothlespam.Helpers.BluetoothHelpers
+import de.simon.dankelmann.bluetoothlespam.Helpers.bluetoothAdapter
 import de.simon.dankelmann.bluetoothlespam.PermissionCheck.PermissionCheck
 import de.simon.dankelmann.bluetoothlespam.R
 import de.simon.dankelmann.bluetoothlespam.databinding.FragmentStartBinding
@@ -48,8 +48,7 @@ class StartFragment : Fragment() {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        viewModel.appVersion.postValue(getAppVersion())
-        viewModel.bluetoothSupport.postValue(getBluetoothSupportText())
+        viewModel.initWithContext(root.context)
 
         // register for bt enable callback
         registerForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -73,21 +72,6 @@ class StartFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    fun getAppVersion():String{
-        val manager = AppContext.getContext()!!.packageManager
-        val info = manager.getPackageInfo(AppContext.getContext().packageName, 0)
-        val version = info.versionName
-        return version
-    }
-
-    fun getBluetoothSupportText():String{
-        if(AppContext.isBluetooth5Supported()){
-            return "Modern & Legacy"
-        } else {
-            return "Legacy only"
-        }
     }
 
     fun setupUi(){
@@ -126,8 +110,10 @@ class StartFragment : Fragment() {
 
         // Bluetooth Support
         val textViewBluetoothSupport: TextView = binding.infoCard.startFragmentTextViewBluetooth
-        viewModel.bluetoothSupport.observe(viewLifecycleOwner) {
-            textViewBluetoothSupport.text = "Bluetooth: $it"
+        viewModel.isBluetooth5Supported.observe(viewLifecycleOwner) { supported ->
+            val resId =
+                if (supported) R.string.bluetooth_support_modern else R.string.bluetooth_support_legacy
+            textViewBluetoothSupport.text = "Bluetooth: ${getString(resId)}"
         }
 
         // Missing Requirements Text
@@ -270,8 +256,8 @@ class StartFragment : Fragment() {
     fun checkBluetoothAdapter(promptIfAdapterIsDisabled:Boolean = false){
         var bluetoothIsReady = false
         // Get Bluetooth Adapter
-        val bluetoothAdapter:BluetoothAdapter? = AppContext.getContext().bluetoothAdapter()
-        if(bluetoothAdapter != null){
+        val bluetoothAdapter: BluetoothAdapter? = context?.bluetoothAdapter()
+        if (bluetoothAdapter != null) {
             removeMissingRequirement("Bluetooth Adapter not found")
             // Check if Bluetooth Adapter is enabled
                 if(bluetoothAdapter.isEnabled){

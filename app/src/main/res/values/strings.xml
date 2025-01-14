@@ -38,6 +38,9 @@
         <item name="tx_power_ultralow">Ultra Low</item>
     </string-array>
 
+    <!-- StartFragment -->
+    <string name="bluetooth_support_legacy">Modern &amp; Legacy</string>\
+    <string name="bluetooth_support_modern">Legacy only</string>
     <string name="startfragment_requirements_checking">Checking Requirements…</string>
 
     <!-- Advertisement Set Types -->
